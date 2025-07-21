@@ -1,9 +1,9 @@
-const User = require('../models/user');
 const { BAD_REQUEST, CONFLICT, NOT_FOUND, UNAUTHORIZED } = require('../utils/errors');
 const { AppError } = require('../utils');
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const { fromEnv } = require('../utils');
+const { userModel } = require('../models');
 
 const register = async (body) => {
   const { name, username, email, password } = body;
@@ -13,27 +13,27 @@ const register = async (body) => {
     throw new AppError(error.code, error.message, error.statusCode);
   }
 
-  const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+  const existingUser = await userModel.findOne({ email });
   if (existingUser) {
     const error = { ...CONFLICT, message: "User already exists" };
     throw new AppError(error.code, error.message, error.statusCode);
   }
 
-  const newUser = new User({ name, username, email, password }); 
+  const newUser = new userModel({ name, username, email, password }); 
   await newUser.save();
 
   return newUser;
 };
 
 const login = async (body) => {
-  const { username, password } = body;
-
-  if (_.isEmpty(username) || _.isEmpty(password)) {
+  const { email, password } = body;
+  console.log("Triggered:",body)
+  if (_.isEmpty(email) || _.isEmpty(password)) {
     const error = { ...BAD_REQUEST, message: "Please enter all required fields" };
     throw new AppError(error.code, error.message, error.statusCode);
   }
 
-  const user = await User.findOne({ username });
+  const user = await userModel.findOne( {email} );
   if (!user) {
     const error = { ...NOT_FOUND, message: "User does not exist" };
     throw new AppError(error.code, error.message, error.statusCode);
@@ -45,7 +45,7 @@ const login = async (body) => {
     throw new AppError(error.code, error.message, error.statusCode);
   }
 
-  const token = jwt.sign({ userId: user._id, username: user.username, role: user.role }, fromEnv('SECRET_KEY'), {
+  const token = jwt.sign({ userId: user._id, email: user.email, role: user.role }, fromEnv('SECRET_KEY'), {
     expiresIn: '1d'
   });
 
