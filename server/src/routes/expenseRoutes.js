@@ -1,13 +1,22 @@
 const express = require('express');
 const { expenseController } = require('../controllers');
-const { verifyToken } = require('../middleware/verifyToken');
+const { verifyToken, verifyTokenAndAdmin } = require('../middleware/verifyToken');
+
 const router = express.Router();
 
-// Create
+// 📝 Create a new expense (by an employee)
+router.post('/', verifyToken, expenseController.create);
 
-router.post('/',verifyToken,expenseController.create)
+// 👤 Get expenses of the logged-in user
+router.get('/', verifyToken, expenseController.get);
 
-router.get('/',verifyToken,expenseController.get)
+// 🔐 Admin: Get all expenses
+router.get('/all', verifyTokenAndAdmin, expenseController.getAll);
 
+// 🔍 Admin: Get expenses by filters (status, category, date range)
+router.get('/filter', verifyTokenAndAdmin, expenseController.getAllByQuery);
 
-module.exports = router
+// 🔄 Admin: Update expense status (approve/reject)
+router.post('/:expenseId/status', verifyTokenAndAdmin, expenseController.updateStatus);
+
+module.exports = router;
