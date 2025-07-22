@@ -1,10 +1,9 @@
-import ExpenseDashboard from "./pages/ExpenseDashboard"
-
+import Routing from './pages/index'
 function App() {
  
   return (
     <>
-      <ExpenseDashboard />
+      <Routing />
     </>
   )
 }

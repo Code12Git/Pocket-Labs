@@ -5,14 +5,22 @@ import {
     UPDATE_EXPENSE_STATUS_REQUEST,
     UPDATE_EXPENSE_STATUS_SUCCESS,
     UPDATE_EXPENSE_STATUS_FAILURE,
-    SET_EXPENSE_FILTER
+    SET_EXPENSE_FILTER,
+    TOTAL_EXPENSES_REQUEST,
+    TOTAL_EXPENSES_SUCCESS,
+    TOTAL_EXPENSES_FAILURE,
+    EXPENSE_OVER_TIME_REQUEST,
+    EXPENSE_OVER_TIME_SUCCESS,
+    EXPENSE_OVER_TIME_FAILURE
   } from "../actionTypes/actionTypes";
   
   const initialState = {
     expenses: [],
     isLoading: false,
     error: null,
-    filter:[]
+    filter:[],
+    totalExpenses:[],
+    expenseovertime:[]
   };
   
   const expenseReducer = (state = initialState, { type, payload }) => {
@@ -25,6 +33,8 @@ import {
           isLoading: true,
           error: null
         };
+
+
       case FETCH_EXPENSES_SUCCESS:
         return {
           ...state,
@@ -69,7 +79,43 @@ import {
           ...state,
           filter: state.expenses.filter(expense => expense.category.toLowerCase() === payload.toLowerCase())
         };
+
+      case TOTAL_EXPENSES_REQUEST:
+        return {
+          ...state,
+          isLoading:true
+        }
+
+      case TOTAL_EXPENSES_SUCCESS:
+        return {
+          ...state,
+          totalExpenses:payload
+        }  
+
+      case TOTAL_EXPENSES_FAILURE:
+        return {
+          ...state,
+          error:payload
+        }  
+
+      case EXPENSE_OVER_TIME_REQUEST:
+        return {
+          ...state,
+          isLoading:false
+        }  
+
+      case EXPENSE_OVER_TIME_SUCCESS:
+        return {
+          ...state,
+          expenseovertime:payload
+        }  
   
+      case EXPENSE_OVER_TIME_FAILURE:
+        return {
+          ...state,
+          error:payload
+        }
+
       default:
         return state;
     }
