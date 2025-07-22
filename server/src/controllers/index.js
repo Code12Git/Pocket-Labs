@@ -1,2 +1,4 @@
 const authController =  require('./authController')
-module.exports = { authController }
+const expenseController =  require('./expenseController')
+
+module.exports = { authController , expenseController }

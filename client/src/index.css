@@ -1,2 +1,8 @@
 @import "tailwindcss";
 
+body {
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #4f46e5, #8b5cf6, #ec4899); /* indigo-600, purple-600, pink-500 */
+    margin: 0;
+    font-family: 'Inter', sans-serif; /* Optional, Tailwind’s default font */
+  }

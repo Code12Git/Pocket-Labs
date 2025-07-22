@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import registerValidation from '../validations/auth/registerValidation'; // your Zod schema
+import registerValidation from '../validations/auth/registerValidation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../redux/actions/authActions';
