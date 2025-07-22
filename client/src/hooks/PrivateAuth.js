@@ -4,7 +4,7 @@ import useAuth from "./auth";
 const PrivateAuth = () => {
   const { userData, token } = useAuth();
   const navigate = useNavigate();
-
+  console.log("Triggered")
   if (!userData || !token) {
     navigate("/login");
     return null; 

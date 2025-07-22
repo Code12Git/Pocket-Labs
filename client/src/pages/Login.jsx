@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import loginValidation from '../validations/auth/loginValidation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginUser } from '../redux/actions/authActions';
@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -22,7 +23,7 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log('Login:', data);
-    dispatch(loginUser(data)) 
+    dispatch(loginUser(data, navigate))
   };
 
   return (
@@ -44,9 +45,8 @@ const Login = () => {
               type="text"
               placeholder="email..."
               {...register('email')}
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                errors.email ? 'border-red-500 focus:ring-red-400' : 'border-gray-300 focus:ring-indigo-400'
-              }`}
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.email ? 'border-red-500 focus:ring-red-400' : 'border-gray-300 focus:ring-indigo-400'
+                }`}
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
           </div>
@@ -60,9 +60,8 @@ const Login = () => {
               type="password"
               placeholder="••••••••"
               {...register('password')}
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                errors.password ? 'border-red-500 focus:ring-red-400' : 'border-gray-300 focus:ring-indigo-400'
-              }`}
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.password ? 'border-red-500 focus:ring-red-400' : 'border-gray-300 focus:ring-indigo-400'
+                }`}
             />
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
           </div>
