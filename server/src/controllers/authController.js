@@ -13,13 +13,21 @@ const register = async (request, response) => {
 const login = async (request, response) => {
     try {
         const result = await authManager.login(request.body)
-        console.log('Login')
         return responseManager.sendSuccessResponse(response, result, "User logged in successfully")
     } catch (err) {
         return responseManager.sendErrorResponse(response, err, "User login failed")
     }
 }
 
+const adminlogin = async (request, response) => {
+    try {
+        const result = await authManager.adminLogin(request.body)
+        return responseManager.sendSuccessResponse(response, result, "Admin logged in successfully")
+    } catch (err) {
+        return responseManager.sendErrorResponse(response, err, "Admin login failed")
+    }
+}
 
 
-module.exports = { register, login }
+
+module.exports = { register, login, adminlogin }

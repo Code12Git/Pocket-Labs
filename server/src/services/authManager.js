@@ -52,4 +52,21 @@ const login = async (body) => {
   return { user: _.omit(user.toObject(), ['password']), token };
 };
 
-module.exports = { register, login };
+
+
+const adminLogin = async (body) => {
+  const {email,password} = body;
+  try{
+    if(_.isEmpty(email) || _.isEmpty(password)) throw new AppError({...BAD_REQUEST,message:'Email and password are required!'});
+
+    if(email !== fromEnv('ADMIN_EMAIL') || password !== fromEnv('ADMIN_PASSWORD')) throw new AppError({...NOT_FOUND,message:'Admin not exists!'})
+
+    const token = jwt.sign({  email, role: 'admin' }, fromEnv('SECRET_KEY'), { expiresIn: '1d' });
+    
+    return { token }
+  }catch(err){
+    throw err;
+  }
+}
+
+module.exports = { register, login, adminLogin };

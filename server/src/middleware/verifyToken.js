@@ -33,10 +33,11 @@ const verifyToken = async (req, res, next) => {
 };
 
 
-const verifyTokenAndAdmin = (request, response, next) => {
+const verifyTokenAndAdmin = (request, response, next) => {   
+    console.log('Triggered')
     try {
         verifyToken(request, response, () => {
-
+            console.log("Request:",request.user)
             if (request.user.role === 'admin') {
                 next();
             } else {
