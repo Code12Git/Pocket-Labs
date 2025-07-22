@@ -46,4 +46,24 @@ const getAllByQuery = async (request,response) => {
     }
 }
 
-module.exports = { create ,get, getAll, updateStatus, getAllByQuery }
+
+const totalExpenses = async (request,response) => {
+    try{
+        const result = await expenseManager.totalExpenses(request.query)
+        return responseManager.sendSuccessResponse(response,result,'Total Expenses fetched Successfully!')
+    }catch(err){
+        return responseManager.sendErrorResponse(response,err,'Total Expenses Cannot be fetched!')
+    }
+}   
+
+
+const expenseOverTime = async (request,response) => {
+    try{
+        const result = await expenseManager.expensesOverTime()
+        return responseManager.sendSuccessResponse(response,result,'Expenses Over Time fetched Successfully!')
+    }catch(err){
+        return responseManager.sendErrorResponse(response,err,' Expenses Over Time  Cannot be fetched!')
+    }
+}
+
+module.exports = { create ,get, getAll, updateStatus, getAllByQuery,totalExpenses, expenseOverTime }

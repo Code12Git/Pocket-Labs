@@ -73,6 +73,56 @@ const updateExpenseStatus = async (params, body) => {
 
 };
 
+// Total Expenses per category
+
+const totalExpenses = async () => {
+    try {
+      const result = await expenseModel.aggregate([{ $group: { _id: "$category", totalAmount: { $sum: "$amount" }}},
+        {
+          $project: {
+            category: "$_id",
+            totalAmount: 1,
+            _id: 0
+          }
+        }
+      ]);
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  };
+  
+
+  const expensesOverTime = async () => {
+    try {
+      const result = await expenseModel.aggregate([
+        {
+          $group: {
+            _id: {
+              year: { $year: "$date" },
+              month: { $month: "$date" }
+            },
+            totalAmount: { $sum: "$amount" }
+          }
+        },
+        {
+          $sort: { "_id.year": 1, "_id.month": 1 }
+        },
+        {
+          $project: {
+            year: "$_id.year",
+            month: "$_id.month",
+            totalAmount: 1,
+            _id: 0
+          }
+        }
+      ]);
+      return result;
+    } catch (err) {
+      throw new AppError({ message: 'Failed to get expenses over time', originalError: err });
+    }
+  };
+
 // Fetch By Query
 
 const getAllExpensesByQuery = async (query) => {
@@ -99,4 +149,4 @@ const getAllExpensesByQuery = async (query) => {
     }
 };
 
-module.exports = { createExpense, getMyExpenses, getAllExpenses, updateExpenseStatus, getAllExpensesByQuery };
+module.exports = { createExpense, getMyExpenses, getAllExpenses, updateExpenseStatus, getAllExpensesByQuery, totalExpenses, expensesOverTime };

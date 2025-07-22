@@ -19,4 +19,10 @@ router.get('/filter', verifyTokenAndAdmin, expenseController.getAllByQuery);
 // 🔄 Admin: Update expense status (approve/reject)
 router.post('/:expenseId/status', verifyTokenAndAdmin, expenseController.updateStatus);
 
+// Total Per Category
+router.get('/total-per-category', verifyTokenAndAdmin, expenseController.totalExpenses);
+
+// Over time
+router.get('/over-time', verifyTokenAndAdmin, expenseController.expenseOverTime);
+
 module.exports = router;
