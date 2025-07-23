@@ -5,6 +5,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOGOUT,
 
 } from "../actionTypes/actionTypes";
 
@@ -64,6 +65,14 @@ const authReducer = (state = initialState ,{ type , payload }) => {
         isLoading: false,
         error: payload
       };
+
+    case LOGOUT:
+      return {
+        ...state,
+        userData:null,
+        isAuthenticated:false,
+        token:null
+      }  
 
   
 

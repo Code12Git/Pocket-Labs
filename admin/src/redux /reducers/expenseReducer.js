@@ -11,7 +11,10 @@ import {
     TOTAL_EXPENSES_FAILURE,
     EXPENSE_OVER_TIME_REQUEST,
     EXPENSE_OVER_TIME_SUCCESS,
-    EXPENSE_OVER_TIME_FAILURE
+    EXPENSE_OVER_TIME_FAILURE,
+    FETCH_AUDIT_LOGS_REQUEST,
+    FETCH_AUDIT_LOGS_SUCCESS,
+    FETCH_AUDIT_LOGS_FAILURE
   } from "../actionTypes/actionTypes";
   
   const initialState = {
@@ -20,7 +23,8 @@ import {
     error: null,
     filter:[],
     totalExpenses:[],
-    expenseovertime:[]
+    expenseovertime:[],
+    logs:[]
   };
   
   const expenseReducer = (state = initialState, { type, payload }) => {
@@ -115,6 +119,27 @@ import {
           ...state,
           error:payload
         }
+
+      case FETCH_AUDIT_LOGS_REQUEST:
+         return {
+          ...state,
+          isLoading:true
+        }  
+      
+      case FETCH_AUDIT_LOGS_SUCCESS:{
+        return {
+          ...state,
+          logs:payload
+        }
+      }  
+
+      case FETCH_AUDIT_LOGS_FAILURE:{
+        return {
+          ...state,
+          error:payload,
+          isLoading:false
+        }
+      }
 
       default:
         return state;

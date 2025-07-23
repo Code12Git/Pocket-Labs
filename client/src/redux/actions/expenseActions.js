@@ -16,9 +16,10 @@ import { getApiErrorMessage } from '../../utils/errorHandler';
 // Create Expense (Employee)
 export const createExpense = (data) => async (dispatch) => {
   dispatch({ type: ADD_EXPENSE_REQUEST });
+  console.log(data)
   try {
     const response = await privateRequest.post('/expense', data);
-    dispatch({ type: ADD_EXPENSE_SUCCESS, payload: response.data });
+    dispatch({ type: ADD_EXPENSE_SUCCESS, payload: response.data.data });
     toast.success('Expense added successfully!');
   } catch (err) {
     dispatch({

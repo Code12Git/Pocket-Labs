@@ -2,6 +2,7 @@ import {
   ADMIN_LOGIN_REQUEST,
   ADMIN_LOGIN_SUCCESS,
   ADMIN_LOGIN_FAILURE,
+  LOGOUT,
 
 } from "../actionTypes/actionTypes";
 
@@ -41,7 +42,13 @@ const authReducer = (state = initialState ,{ type , payload }) => {
       };
 
   
-
+    case LOGOUT:
+      return{
+        ...state,
+        isAuthenticated:false,
+        adminData:null,
+        token:null
+      }  
 
     default:
       return state;

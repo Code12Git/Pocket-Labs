@@ -15,6 +15,8 @@ import { Bar } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import { totalExpense } from "../redux /actions/expenseActions";
 
+
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
