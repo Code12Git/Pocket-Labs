@@ -4,7 +4,8 @@
 This is a full-stack expense tracking application built for Pocketrocket Labs' take-home assignment. The app helps remote teams track and review expenses with role-based access control and visual insights.
 
 ## 🌐 Live Demo (Optional)
-🔗 [Deployed Link](https://aaradhna-task.vercel.app/login) 
+🔗 [Deployed Link Employee](https://pocket-labs.vercel.app/login) 
+🔗 [Deployed Link Admin](https://pocket-labs-etry.vercel.app/admin) 
 
 ## 🛠️ Tech Stack
 
@@ -131,7 +132,6 @@ Frontend Structure
 
 - Protected routes based on user roles
 
-- Custom hooks for API calls
 
 ## ⚖️ Trade-offs
 

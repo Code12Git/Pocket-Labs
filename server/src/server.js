@@ -9,6 +9,7 @@ const PORT = fromEnv('PORT') || 3001;
 
 const allowedOrigins = [
   'https://pocket-labs.vercel.app/',
+  'https://pocket-labs-etry.vercel.app/',
   /\.vercel\.app$/, 
   /\.now\.sh$/,    
   'http://localhost:5173', 
