@@ -4,19 +4,19 @@ const { verifyToken, verifyTokenAndAdmin } = require('../middleware/verifyToken'
 
 const router = express.Router();
 
-// 📝 Create a new expense (by an employee)
+//  Create a new expense 
 router.post('/', verifyToken, expenseController.create);
 
-// 👤 Get expenses of the logged-in user
+//  Get expenses 
 router.get('/', verifyToken, expenseController.get);
 
-// 🔐 Admin: Get all expenses
+//  Admin: Get all expenses
 router.get('/all', verifyTokenAndAdmin, expenseController.getAll);
 
-// 🔍 Admin: Get expenses by filters (status, category, date range)
+//  Admin: Get expenses by filters
 router.get('/filter', verifyTokenAndAdmin, expenseController.getAllByQuery);
 
-// 🔄 Admin: Update expense status (approve/reject)
+//  Admin: Update expense status
 router.post('/:expenseId/status', verifyTokenAndAdmin, expenseController.updateStatus);
 
 // Total Per Category

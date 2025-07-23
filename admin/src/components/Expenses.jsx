@@ -48,7 +48,6 @@ const Expenses = ({ expense }) => {
   const dispatch = useDispatch()
 
   const handleStatusChange = (newStatus) => {
-    console.log(newStatus)
     dispatch(changeStatus(expense._id,newStatus))
     setShowStatusOptions(false);
   };

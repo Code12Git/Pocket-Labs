@@ -1,4 +1,3 @@
-const { expenseModel } = require("../models")
 const { responseManager, logManager } = require("../services")
 
 const getAll = async (request,response) => {

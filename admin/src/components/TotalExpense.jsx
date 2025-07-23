@@ -36,7 +36,6 @@ const TotalExpense = () => {
     dispatch(totalExpense());
   }, [dispatch]);
 
-  console.log(totalExpenses)
 
   // Standardize and define all possible labels
   const labels = ["Travel", "Food", "Accommodation", "Officesupplies", "Other"];
