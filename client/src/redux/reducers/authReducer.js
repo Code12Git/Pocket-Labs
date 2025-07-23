@@ -32,8 +32,6 @@ const authReducer = (state = initialState ,{ type , payload }) => {
         ...state,
         isLoading: false,
         userData: payload.user,
-        isAuthenticated: true,
-        token: payload.token,
         error: null
       };
     case REGISTER_FAILURE:
