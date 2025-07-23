@@ -75,6 +75,9 @@ npm install
 cp .env
 npm run dev
 ```
+### Admin Creds
+- root123@gmail.com
+- password
 
 ## 📂 Project Structure
 
