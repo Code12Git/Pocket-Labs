@@ -27,7 +27,6 @@ const register = async (body) => {
 
 const login = async (body) => {
   const { email, password } = body;
-  console.log("Triggered:",body)
   if (_.isEmpty(email) || _.isEmpty(password)) {
     const error = { ...BAD_REQUEST, message: "Please enter all required fields" };
     throw new AppError(error.code, error.message, error.statusCode);

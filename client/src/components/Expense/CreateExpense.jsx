@@ -18,7 +18,6 @@ const CreateExpense = () => {
   });
 
   const onSubmit = (values) => {
-    console.log(values);
     dispatch(createExpense(values))
     reset()
   };
