@@ -7,7 +7,6 @@ import { logsOverTime } from '../redux /actions/expenseActions';
 const LogsDetail = () => {
   const dispatch = useDispatch();
   const { logs } = useSelector(state => state.expense)
-  console.log(logs)
   useEffect(() => {
     dispatch(logsOverTime());
   }, [dispatch]);
