@@ -24,7 +24,6 @@ const  Register = () => {
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
-    console.log('Register:', data);
     dispatch(registerUser(data))
   };
 

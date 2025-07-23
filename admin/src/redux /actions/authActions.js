@@ -10,11 +10,9 @@ import { getApiErrorMessage } from '../../utils/errorHandler';
 
 
 export const  adminLogin = (email,password, navigate) => async (dispatch) => {
-  console.log(email,password)
   dispatch({ type: ADMIN_LOGIN_REQUEST });
   try {
     const response = await publicRequest.post('/auth/adminlogin', {email:email,password:password});
-    console.log(response)
     dispatch({
       type: ADMIN_LOGIN_SUCCESS,
       payload: {

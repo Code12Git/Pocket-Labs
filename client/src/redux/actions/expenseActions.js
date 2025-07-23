@@ -16,7 +16,6 @@ import { getApiErrorMessage } from '../../utils/errorHandler';
 // Create Expense (Employee)
 export const createExpense = (data) => async (dispatch) => {
   dispatch({ type: ADD_EXPENSE_REQUEST });
-  console.log(data)
   try {
     const response = await privateRequest.post('/expense', data);
     dispatch({ type: ADD_EXPENSE_SUCCESS, payload: response.data.data });
@@ -33,10 +32,8 @@ export const createExpense = (data) => async (dispatch) => {
 // Get Expenses (Employee or Admin)
 export const getExpenses = () => async (dispatch) => {
   dispatch({ type: FETCH_EXPENSES_REQUEST });
-  console.log('Triggered')
   try {
     const response = await privateRequest.get('/expense');
-    console.log(response)
     dispatch({ type: FETCH_EXPENSES_SUCCESS, payload: response.data.data });
   } catch (err) {
     dispatch({

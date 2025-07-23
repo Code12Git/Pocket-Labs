@@ -78,7 +78,6 @@ import {
   
       // FILTER EXPENSES (admin)
       case SET_EXPENSE_FILTER:
-        console.log("Payload:",payload)
         return {
           ...state,
           filter: state.expenses.filter(expense => expense.category.toLowerCase() === payload.toLowerCase())

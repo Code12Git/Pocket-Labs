@@ -125,7 +125,6 @@ const getAllExpensesByQuery = async (query) => {
         const filter = {};
 
         const { category, startDate, endDate } = query;
-        console.log(category,startDate,endDate)
         if(category){
             filter.category = category.toLowerCase();
         }
@@ -134,7 +133,6 @@ const getAllExpensesByQuery = async (query) => {
         }
 
         const expenses = await expenseModel.find(filter).lean()
-        console.log(expenses)
         if (expenses.length === 0) throw new AppError({ ...NOT_FOUND, message: 'Expenses not found!' })
         return expenses;
 
