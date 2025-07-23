@@ -3,15 +3,18 @@ import {
   ADMIN_LOGIN_REQUEST,
   ADMIN_LOGIN_SUCCESS,
   ADMIN_LOGIN_FAILURE,
+  LOGOUT
 } from '../actionTypes/actionTypes';
 import toast from 'react-hot-toast';
 import { getApiErrorMessage } from '../../utils/errorHandler';
 
 
-export const  adminLogin = (credentials, navigate) => async (dispatch) => {
+export const  adminLogin = (email,password, navigate) => async (dispatch) => {
+  console.log(email,password)
   dispatch({ type: ADMIN_LOGIN_REQUEST });
   try {
-    const response = await publicRequest.post('/auth/login', credentials);
+    const response = await publicRequest.post('/auth/adminlogin', {email:email,password:password});
+    console.log(response)
     dispatch({
       type: ADMIN_LOGIN_SUCCESS,
       payload: {
@@ -19,7 +22,8 @@ export const  adminLogin = (credentials, navigate) => async (dispatch) => {
         token: response.data.data.token
       }
     });
-    toast.success("User Logged In Successfully");
+
+    toast.success("Admin Logged In Successfully");
     navigate('/');
   } catch (err) {
     dispatch({
@@ -33,3 +37,12 @@ export const  adminLogin = (credentials, navigate) => async (dispatch) => {
   }
 };
 
+
+export const logout = () => async (dispatch) => {
+  try{
+    dispatch({ type:LOGOUT })
+    toast.success('Admin Logout Successfully')
+  }catch(err){
+    toast.error(getApiErrorMessage(err));
+  }
+}

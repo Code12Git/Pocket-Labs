@@ -1,21 +1,20 @@
 const { BAD_REQUEST, NOT_FOUND } = require('../utils/errors');
 const { AppError } = require('../utils');
 const _ = require('lodash');
-const { expenseModel } = require('../models')
+const { expenseModel, logModel } = require('../models');
 
 
 // Create Expenses
 const createExpense = async (user, body) => {
     const { amount, category, date, notes } = body;
 
-    console.log(user)
-    console.log(amount, category, date, notes, 'trigger')
     try {
         if (!amount || _.isEmpty(category) || _.isEmpty(date)) {
             throw new AppError(BAD_REQUEST.code, 'Amount, category, and date are required', BAD_REQUEST.statusCode);
         }
 
         const expense = await expenseModel.create({ employeeId: user._id, amount, category, date, notes });
+        await logModel.create({ userId: user._id, actionType: 'CREATE_EXPENSE', description: `Expense of ₹${amount} created in category ${category}`, expenseId: expense._id });
         return expense;
     } catch (err) {
         throw err;
@@ -49,23 +48,17 @@ const getAllExpenses = async () => {
 
 
 // Updating Expense Status
-const updateExpenseStatus = async (params, body) => {
+const updateExpenseStatus = async (params, body, user) => {
     const { expenseId } = params;
     const { status } = body;
     try {
-
-        console.log('hey')
         const validStatuses = ['pending', 'approved', 'rejected'];
         if (!validStatuses.includes(status)) throw new AppError({ ...BAD_REQUEST, message: 'It should contain valid status' });
-        console.log(validStatuses)
-
         const expense = await expenseModel.findById(expenseId);
-        console.log(expense)
         if (!expense) throw new AppError(NOT_FOUND.code, 'Expense not found', NOT_FOUND.statusCode);
-
-
         expense.status = status;
         await expense.save();
+        await logModel.create({ userId: user._id, actionType: 'STATUS_CHANGE', description: `Status updated to '${status}' for expense ₹${expense.amount} in category ${expense.category} by ${user.name}`, expenseId: expense._id });
         return expense;
     } catch (err) {
         throw err;
@@ -77,7 +70,7 @@ const updateExpenseStatus = async (params, body) => {
 
 const totalExpenses = async () => {
     try {
-      const result = await expenseModel.aggregate([{ $group: { _id: "$category", totalAmount: { $sum: "$amount" }}},
+      const totalExpense = await expenseModel.aggregate([{ $group: { _id: "$category", totalAmount: { $sum: "$amount" }}},
         {
           $project: {
             category: "$_id",
@@ -86,16 +79,18 @@ const totalExpenses = async () => {
           }
         }
       ]);
-      return result;
+      return totalExpense;
     } catch (err) {
       throw err;
     }
   };
   
 
+// Expenses OVer Time
+
   const expensesOverTime = async () => {
     try {
-      const result = await expenseModel.aggregate([
+      const expenses = await expenseModel.aggregate([
         {
           $group: {
             _id: {
@@ -117,7 +112,7 @@ const totalExpenses = async () => {
           }
         }
       ]);
-      return result;
+      return expenses;
     } catch (err) {
       throw new AppError({ message: 'Failed to get expenses over time', originalError: err });
     }
@@ -127,7 +122,6 @@ const totalExpenses = async () => {
 
 const getAllExpensesByQuery = async (query) => {
     try {
-        console.log('triggered'); // Confirm this gets logged
         const filter = {};
 
         const { category, startDate, endDate } = query;

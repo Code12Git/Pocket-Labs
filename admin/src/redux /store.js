@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from './reducers/authReducer';
 import expenseReducer from './reducers/expenseReducer';
 
-const persistConfig = {
+export const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['auth','expense'],

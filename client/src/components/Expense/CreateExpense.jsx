@@ -50,11 +50,11 @@ const CreateExpense = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700"
           >
             <option value="">Select category</option>
-            <option value="Travel">Travel</option>
-            <option value="Food">Food</option>
-            <option value="Accommodation">Accommodation</option>
-            <option value="Office Supplies">Office Supplies</option>
-            <option value="Other">Other</option>
+            <option value="travel">Travel</option>
+            <option value="food">Food</option>
+            <option value="accommodation">Accommodation</option>
+            <option value="office supplies">Office Supplies</option>
+            <option value="other">Other</option>
           </select>
           {errors?.category && <p className="text-red-500 text-sm mt-1">{errors.category.message}</p>}
         </div>

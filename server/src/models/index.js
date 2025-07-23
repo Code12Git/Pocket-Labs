@@ -1,3 +1,4 @@
 const user = require('./user')
 const expense = require('./expense')
-module.exports = { userModel: user , expenseModel: expense }
+const log = require('./log')
+module.exports = { userModel: user , expenseModel: expense, logModel:log }

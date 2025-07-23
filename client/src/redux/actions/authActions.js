@@ -6,6 +6,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOGOUT,
 } from '../actionTypes/actionTypes';
 import toast from 'react-hot-toast';
 import { getApiErrorMessage } from '../../utils/errorHandler';
@@ -47,7 +48,7 @@ export const loginUser = (credentials, navigate) => async (dispatch) => {
       }
     });
     toast.success("User Logged In Successfully");
-    navigate('/');
+    navigate('/expense');
   } catch (err) {
     dispatch({
       type: LOGIN_FAILURE,
@@ -60,3 +61,13 @@ export const loginUser = (credentials, navigate) => async (dispatch) => {
   }
 };
 
+
+export const logout = () => async (dispatch) => {
+  try{
+    localStorage.removeItem('persist:root')
+    dispatch({ type:LOGOUT })
+    toast.success('User Logout Successfully')
+  }catch(err){
+    toast.error(getApiErrorMessage(err));
+  }
+}

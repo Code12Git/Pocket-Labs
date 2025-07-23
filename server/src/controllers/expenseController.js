@@ -29,7 +29,7 @@ const getAll = async (request,response) => {
 
 const updateStatus = async (request,response) => {
     try{
-        const result = await expenseManager.updateExpenseStatus(request.params,request.body)
+        const result = await expenseManager.updateExpenseStatus(request.params,request.body,request.user)
         return responseManager.sendSuccessResponse(response,result,'Expenses Status Updated Successfully!')
     }catch(err){
         return responseManager.sendErrorResponse(response,err,'Expenses Cannot be updated successfully!')
