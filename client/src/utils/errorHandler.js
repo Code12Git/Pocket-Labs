@@ -3,8 +3,9 @@ export const getApiErrorMessage = (error) => {
   
     if (error instanceof Error) {
       const axiosError = error;
+      console.log( axiosError?.response?.data?.message)
       return (
-        axiosError?.response?.data?.code?.message ||
+        axiosError?.response?.data?.message ||
         error.message ||
         "An unknown error occurred"
       );

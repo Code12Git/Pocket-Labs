@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import registerValidation from '../validations/auth/registerValidation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch } from 'react-redux';
@@ -22,9 +22,10 @@ const  Register = () => {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    dispatch(registerUser(data))
+    dispatch(registerUser(data,navigate))
   };
 
   return (
